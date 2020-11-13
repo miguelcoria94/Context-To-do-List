@@ -28,7 +28,13 @@ class AppWithContext extends React.Component {
     };
 
     deleteTask = (id) => {
-
+        this.setState((state, props) => {
+            const tasksWithDeletion = { ...state.tasks };
+            delete tasksWithDeletion[id];
+            return {
+                tasks: tasksWithDeletion,
+            };
+        }, () => this.updateLocalStorageTasks());
     }
 
     updateLocalStorageTasks = () => {
@@ -39,7 +45,9 @@ class AppWithContext extends React.Component {
 
     render() {
         return (
-
+            <TodoContext.Provider value={this.state}>
+                <App />
+            </TodoContext.Provider>
         );
     }
 }
